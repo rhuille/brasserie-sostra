@@ -1,1 +1,269 @@
-Hello World
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Brasserie Sostra</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <!--  -->
+
+  </head>
+
+  <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0" nonce="DX2Eiacv"></script>
+
+    <div id="header">
+        <a id="logo" href="#accueil">Brasserie Sostra</a>
+        <a class="link" href="#bieres">Les bières</a>
+        <a class="link" href="#tarifs">Tarifs</a>
+        <a class="link" href="#ingredients">Les Ingrédients</a>
+        <a class="link" href="#actualites">Actualités</a>
+        <a class="link" href="#contacts">Contacts</a>
+    </div>
+
+    <div id="header-phone" onclick="tooglePhoneMenu()">
+      <div id="header-header-phone" >
+        <div id="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <a id="logo">Brasserie Sostra</a>
+      </div>
+      <div id="menu-phone">
+        <a class="link phone-menu" href="#accueil">Accueil</a>
+        <a class="link phone-menu" href="#bieres">Les bières</a>
+        <a class="link phone-menu" href="#tarifs">Tarifs</a>
+        <a class="link phone-menu" href="#ingredients">Les Ingrédients</a>
+        <a class="link phone-menu" href="#actualites">Actualités</a>
+        <a class="link phone-menu" href="#contacts">Contacts</a>
+      </div>
+    </div>
+
+
+
+
+
+    <div id="accueil" class="page">
+      <h1>Bière artisanale de la Souterraine</h1>
+      <br>
+      <div id="text-container">
+        <img src="Logo.png"/>
+        <div>
+          C'est au croisement des routes commerciales reliant Limoges à Paris et 
+          Clermont Ferrand à Poitier, que s'est construite la Souterraine, une 
+          jolie ville médiévale dévelopée autour de son abbatiale. Une ville à 
+          l'architecture robuste et austère qui rappelle la vigueure de ses 
+          habitants d'autrefois. On ne peut s'y promener sans être marqué par son 
+          histoire encore si présente. 
+          <br>
+          <br>
+          C'est aussi une ville vivante, où habitants et passants aiment se retrouver 
+          au marché (au pied de l'église), au bars (Les Marroniers), au café 
+          (Le Café Chaud), restautant (L'Osmose) et tiers lieux (La Maison d'à
+          Côté)... C'est au coeur de ce bourg si animé que s'est créée la brasserie 
+          Sostra. Sa bière se veut imprégnée de cette âme ancestrale et jeune qui 
+          vit à la Souterraine.      
+        </div>
+        
+      </div>
+      <br>
+      <h2><a href="#bieres">Découvrez la bière Sostra, la bière de Sostranie. </a></h2>
+
+    </div>
+
+    <div id="bieres" class="page">
+      <div class="biere-presentation">
+        <img src="BouteilleBlonde.png" height="400px" />
+        <div>
+          <h2>La Blonde</h2>
+          <div class="biere-description">
+            Bière blonde, plutôt ronde, avec une pointe d'agrume, citron ou 
+            orange selon les palais.
+          </div>
+          <br/>
+          <div class="biere-caracteristiques">
+            Taux d’alcool : <span>4 %</span><br/>
+            Température de dégustation : <span>5-6°C</span><br/>
+            Couleur : <span>blonde - 9 EBC</span><br/>
+            Amertume : <span>un peu amer - 40 IBU</span><br/>
+            Ingrédients : 
+            <ul>
+              <li>Malt d'orge pale</li>
+              <li>Houblons: Chinnook & Cascade</li>
+              <li>Levure kveik</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="biere-presentation">
+        <img src="BouteilleIPA.png" height="400px" />
+        <div>
+          <h2>L'IPA</h2>
+          <div class="biere-description">
+            Une Indian Pale Ale de couleur profonde, très amère, équilibrée avec 
+            des arômes de biscuits, d'herbes et d'agrumes.
+          </div>
+          <br/>
+          <div class="biere-caracteristiques">
+            Taux d’alcool : <span>4 %</span><br/>
+            Température de dégustation : <span>7-9°C</span><br/>
+            Couleur : <span>foncée profonde - 55 EBC</span><br/>
+            Amertume : <span>assez amer - 55 IBU</span><br/>
+            Ingrédients : 
+            <ul>
+              <li>Malt d'orge pale et foncée</li>
+              <li>Houblons: Nugget & Aramis</li>
+              <li>Levure kveik</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="biere-presentation">
+        <img src="BouteilleAmbree.png" height="400px" />
+        <div>
+          <h2>L'Ambrée</h2>
+          <div class="biere-description">
+            Bière ambrée, avec des notes de caramel, peu houblonnée et beaucoup 
+            portée sur la céréale.
+          </div>
+          <br/>
+          <div class="biere-caracteristiques">
+            Taux d’alcool : <span>4 %</span><br/>
+            Température de dégustation : <span>7-9°C</span><br/>
+            Couleur : <span>ambrée - 27 EBC</span><br/>
+            Amertume : <span>pas amer - 20 IBU</span><br/>
+            Ingrédients : 
+            <ul>
+              <li>Malt d'orge pale et caramelisé</li>
+              <li>Houblons: Nugget & Fuggles</li>
+              <li>Levure kveik</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="actualites" class="page">
+      <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=61555005142636" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false"><blockquote cite="https://www.facebook.com/profile.php?id=61555005142636" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/profile.php?id=61555005142636">Brasserie Sostra</a></blockquote></div>
+    </div>
+
+    <div id="tarifs" class="page">
+      Toutes les recettes sont au même prix:
+      <br/>
+      <br/>
+      
+      - Bouteille de 75cl: 6€
+      <br/>
+      <br/>
+      - Bouteille de 50cl: 4€
+      <br/><br/><br/>
+      - Carton de 6 x 75cl: 36€
+      <br/>
+      <br/>
+      - Carton de 8 x 50cl: 32€
+
+    </div>
+
+    <div id="ingredients" class="page">
+      La bière c'est 4 ingrédients:
+      <br/>
+      <br/>
+      - de l'<span>eau</span> : dans la Sostra, c'est l'eau courante de la Souterraine.
+      <br/>
+      <br/>
+      - du <span>malt</span> : il provient de <a href="https://www.lesmaltiers.fr/">la malterie d'Issoudun</a> dans le Berry, région prolifique dans la culture de l'orge !
+      <br/>
+      <br/>
+      - du <span>houblon</span> : provient autant que possible de <a href="https://www.facebook.com/p/Houblon-Cours-Cocotte-100057098004384/">"Cours Cocotte"</a> une houblonnière située à Arlanc dans le Puy de Dôme (69). Certains houblons proviennent <a href="https://www.comptoir-houblon.fr/"> d'Alsace</a>.
+      <br/>
+      <br/>
+      - des <span>levures</span> : elles sont produites par le laboratoire <a href="https://www.lallemandbrewing.com/fr/">"lallemand"</a>.
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      Les <span>bouteilles</span> sont fournies par <a href="https://www.temaco.fr/fr/">Temaco</a> une entreprise corrézienne.
+    </div>
+
+    <div id="contacts" class="page">
+      <h3>Retrouvez les bières Sostra sur le marché de la Souterraine le samedi matin.</h3>
+      <div>
+        <div>
+          <h3>Adresse & Contacts</h3>
+          Brasserie Sostra<br/>
+          16 rue Haute Saint Michel<br/>
+          23300 LA SOUTERRAINE<br/><br/>
+          07/82/81/57/18<br/>
+          brasseriesostranienne(a)gmail.com<br/>
+        </div>
+        <br/><br/>
+        <div>
+          <h3>Point de ventes</h3>
+          Retrouvez la Sostra à la Souterraine:<br/>
+          <a href="https://maps.app.goo.gl/wSRv2Kx8Zd7USitA8">-L'Osmose</a><br/>
+          <a href="https://maps.app.goo.gl/Ym4yVBQkUDVb4veC8">-Le Café Chaud</a><br/>
+          <a href="https://maps.app.goo.gl/tWdHesRdKfGgCgUo6">-Les Marronniers</a><br/>
+          <a href="https://maps.app.goo.gl/DgSJZ1gybwSZV8r56">-La Maison d'à Côté</a><br/>
+          <a href="https://maps.app.goo.gl/ermtqdFLdgNEBKNr9">- Le comptoir de Françoinette</a><br/>
+        </div>
+        <br/><br/>
+        <div>
+          <h3>Horaires</h3>
+          Lundi: 9h30-15h<br/>
+          Mardi: 9h30-15h<br/>
+          Mercredi: Fermé<br/>
+          Jeudi: 9h30-15h<br/>
+          Vendredi: 9h30-15h<br/>
+          Samedi: 8h-13h au marché de la Souterraine<br/>
+          Dimanche: Fermé
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+      <img src="footer-img.png"  width="100%"/>
+      <!-- <div id="message">
+        L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
+      </div> -->
+    </div>
+  </body>
+
+  <script>
+    function setHash() {
+      pages = document.getElementsByClassName('page')
+      for (var i = 0; i < pages.length; ++i) pages[i].style.display = 'none';
+
+      links = document.getElementsByClassName('link')
+      for (var i = 0; i < links.length; ++i) links[i].classList.remove('selected');
+
+      location.hash = location.hash ? location.hash : '#accueil'
+
+      const el = document.querySelector(location.hash)
+      if (el != null) el.style.display = 'block';
+
+      const a = document.querySelector(`a[href="${location.hash}"]`)
+      if (a != null) a.classList.add('selected')
+
+      hidePhoneMenu();
+    }
+
+    addEventListener("hashchange", setHash);
+    setHash();
+
+    function tooglePhoneMenu(){
+      if (document.getElementById('header-phone').style.maxHeight == '60px'){
+        document.getElementById('header-phone').style.maxHeight = '800px'
+      } else {
+        document.getElementById('header-phone').style.maxHeight = '60px'
+      }
+    }
+  </script>
+</html>
