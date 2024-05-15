@@ -48,9 +48,6 @@
     </div>
 
 
-
-
-
     <div id="accueil" class="page">
       <h1>Bière artisanale de la Souterraine</h1>
       <br>
@@ -251,8 +248,6 @@
 
       const a = document.querySelector(`a[href="${location.hash}"]`)
       if (a != null) a.classList.add('selected')
-
-      hidePhoneMenu();
     }
 
     addEventListener("hashchange", setHash);
@@ -265,5 +260,6 @@
         document.getElementById('header-phone').style.maxHeight = '60px'
       }
     }
+    tooglePhoneMenu();
   </script>
 </html>

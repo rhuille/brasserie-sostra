@@ -144,7 +144,7 @@ ul {
   position: fixed;
   width: 100%;
   max-height: 60px;
-  transition: max-height 0.5s linear;
+  transition: max-height 0.2s linear;
   align-items: center;
   top: 0px;
   overflow: hidden;
