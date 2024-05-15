@@ -256,8 +256,10 @@
     function tooglePhoneMenu(){
       if (document.getElementById('header-phone').style.maxHeight == '60px'){
         document.getElementById('header-phone').style.maxHeight = '800px'
+        if(location.hash == '#actualites') document.querySelector('#actualites > div').style.display = 'none'
       } else {
         document.getElementById('header-phone').style.maxHeight = '60px'
+        if(location.hash == '#actualites') document.querySelector('#actualites > div').style.display = 'block'
       }
     }
     tooglePhoneMenu();
