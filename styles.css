@@ -96,7 +96,10 @@ ul {
 #bieres .biere-presentation:last-child {
   margin-bottom: 100px;
   border-bottom: none;
+}
 
+#bieres .biere-presentation > img {
+  height: 400px;
 }
 
 #bieres .biere-caracteristiques {
@@ -219,5 +222,13 @@ ul {
 
   #accueil > #text-container {
     display: block;
+  }
+
+  #accueil > #text-container {
+    margin: 0px;
+  }
+
+  #bieres .biere-presentation > img {
+    height: 200px;
   }
 }
