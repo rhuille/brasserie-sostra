@@ -16,9 +16,6 @@
   </head>
 
   <body>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0" nonce="DX2Eiacv"></script>
-
     <div id="header">
         <a id="logo" href="#accueil">Brasserie Sostra</a>
         <a class="link" href="#bieres">Les bières</a>
@@ -149,7 +146,39 @@
     </div>
 
     <div id="actualites" class="page">
-      <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=61555005142636" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false"><blockquote cite="https://www.facebook.com/profile.php?id=61555005142636" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/profile.php?id=61555005142636">Brasserie Sostra</a></blockquote></div>
+      <script>
+        async function displayActus() {
+          const response = await fetch("actu/actu.json");
+          const actualites = await response.json();
+          for ({text, img, date, width, height} of actualites) {
+            const actuContainer = document.createElement("div")
+            actuContainer.className = 'actu-container'
+            
+            const actuText = document.createElement("div")
+            actuText.className = 'actu-text'
+
+            const dateEl = document.createElement("div")
+            dateEl.className = "date"
+            dateEl.textContent = date
+            actuText.appendChild(dateEl)
+            actuText.appendChild(document.createElement("br"))
+
+            const divTextEl = document.createElement("div")
+            divTextEl.textContent = text
+            actuText.appendChild(divTextEl)
+
+            const imgEl = document.createElement("img")
+            imgEl.src = `actu/${img}`
+            if(width != null) imgEl.width = width
+            if(height != null) imgEl.height = height
+            
+            actuContainer.appendChild(actuText)
+            actuContainer.appendChild(imgEl)
+            document.getElementById('actualites').appendChild(actuContainer)
+          }
+        }
+        displayActus();
+      </script>
     </div>
 
     <div id="tarifs" class="page">
@@ -256,10 +285,8 @@
     function tooglePhoneMenu(){
       if (document.getElementById('header-phone').style.maxHeight == '60px'){
         document.getElementById('header-phone').style.maxHeight = '800px'
-        if(location.hash == '#actualites') document.querySelector('#actualites > div').style.display = 'none'
       } else {
         document.getElementById('header-phone').style.maxHeight = '60px'
-        if(location.hash == '#actualites') document.querySelector('#actualites > div').style.display = 'block'
       }
     }
     tooglePhoneMenu();

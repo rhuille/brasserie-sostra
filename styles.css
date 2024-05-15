@@ -63,7 +63,7 @@ ul {
   padding-top: 20px;
   margin-left: 100px;
   margin-right: 100px;
-  margin-bottom: 70px;
+  margin-bottom: 200px;
 }
 
 #accueil {
@@ -162,6 +162,26 @@ ul {
   height: 60px;
 }
 
+#actualites img {
+  max-height: 400px;
+}
+
+#actualites .actu-container {
+  border-bottom: solid 1px;
+  display: flex;
+  padding: 20px;
+}
+
+#actualites .actu-text {
+  padding: 20px;
+  font-size: 18px;
+}
+
+#actualites .actu-text div.date {
+  font-size: 22px;
+  font-weight: 700;
+}
+
 @media only screen and (max-width: 600px) {
   #header-phone {
     display: block;
@@ -230,5 +250,13 @@ ul {
 
   #bieres .biere-presentation > img {
     height: 200px;
+  }
+
+  #actualites .actu-container {
+    display: block;
+  }
+
+  #actualites img {
+    max-width: 100%;
   }
 }
