@@ -80,39 +80,7 @@
     </div>
 
     <div id="actualites" class="page">
-      <script>
-        async function displayActus() {
-          const response = await fetch("actu/actu.json");
-          const actualites = await response.json();
-          for ({text, img, date, width, height} of actualites) {
-            const actuContainer = document.createElement("div")
-            actuContainer.className = 'actu-container'
-            
-            const actuText = document.createElement("div")
-            actuText.className = 'actu-text'
-
-            const dateEl = document.createElement("div")
-            dateEl.className = "date"
-            dateEl.textContent = date
-            actuText.appendChild(dateEl)
-            actuText.appendChild(document.createElement("br"))
-
-            const divTextEl = document.createElement("div")
-            divTextEl.textContent = text
-            actuText.appendChild(divTextEl)
-
-            const imgEl = document.createElement("img")
-            imgEl.src = `actu/${img}`
-            if(width != null) imgEl.width = width
-            if(height != null) imgEl.height = height
-            
-            actuContainer.appendChild(actuText)
-            actuContainer.appendChild(imgEl)
-            document.getElementById('actualites').appendChild(actuContainer)
-          }
-        }
-        displayActus();
-      </script>
+     Retrouvez l'actualité de la <a href="https://www.facebook.com/profile.php?id=61555005142636">Sostra sur facebook</a>.
     </div>
 
     <div id="tarifs" class="page">
