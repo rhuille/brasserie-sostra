@@ -611,6 +611,17 @@ input:focus, select:focus{
   transform: translateX(-50%) translateY(-40px);
 }
 
+/* Pour Chrome, Safari, Edge et Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Pour Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 @media (min-width: 600px) {
   #cart-sidebar {
@@ -1053,7 +1064,7 @@ recettes.forEach((nom, bIdx) => {
         <div class="format-label">${f.l} <br><span class="format-price">${f.p}€</span></div>
         <div class="qty-box">
           <button onclick="changeQty('${nom}','${f.l}',${f.p},-1,${bIdx},${fIdx})">-</button>
-          <input type="text" inputmode="numeric" pattern="[0-9]*" id="qty-${bIdx}-${fIdx}" value="0" readonly>
+          <input oninput="changeQtyManuel('${nom}','${f.l}',${f.p},Number(this.value),${bIdx},${fIdx})" type="number" inputmode="numeric" pattern="[0-9]*" id="qty-${bIdx}-${fIdx}" value="0">
           <button onclick="changeQty('${nom}','${f.l}',${f.p},1,${bIdx},${fIdx})">+</button>
         </div>
       </div>`;
@@ -1167,6 +1178,27 @@ function changeQty(nom, fmtL, prix, delta, bIdx, fIdx) {
     document.getElementById(`row-${bIdx}-${fIdx}`).classList.add('active-row');
     document.getElementById(`qty-${bIdx}-${fIdx}`).value = currentQty;
   }
+
+  renderCart();
+}
+
+function changeQtyManuel(nom, fmtL, prix, value, bIdx, fIdx) {
+  const key = `${nom}-${fmtL}`;
+  if (!panierData[key]) panierData[key] = { nom, format: fmtL, prix, qty: 0 };
+
+  panierData[key].qty = value;
+  const currentQty = panierData[key].qty;
+
+  if (currentQty <= 0) {
+    delete panierData[key];
+    document.getElementById(`row-${bIdx}-${fIdx}`).classList.remove('active-row');
+    document.getElementById(`qty-${bIdx}-${fIdx}`).value = 0;
+  } else {
+    document.getElementById(`row-${bIdx}-${fIdx}`).classList.add('active-row');
+    document.getElementById(`qty-${bIdx}-${fIdx}`).value = currentQty;
+  }
+
+  document.querySelector(`#row-${bIdx}-${fIdx} input`).value = value
 
   renderCart();
 }
