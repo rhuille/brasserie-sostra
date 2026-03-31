@@ -623,6 +623,19 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+#message-grosse-commande, #message-grosse-commande-mobile {
+  display: block;
+  text-align: center;
+  padding: 20px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+#message-grosse-commande-mobile {
+  padding: 20px 20px;
+  margin-top: 0px;
+}
+
 @media (min-width: 600px) {
   #cart-sidebar {
     width: 360px;
@@ -942,6 +955,19 @@ footer{
 
     
     <button id="btn-continuer" class="btn-checkout" onclick="continuer()" disabled autocomplete="off">CONTINUER</button>
+    <div id="message-grosse-commande" style="display: none;">
+      Pour les commandes supperieurs à 400€,
+      Veuillez nous contacter directement :
+      <p class="contact-item" data-copy="mail" data-label="Email">
+        <img src="email.png" style="height: 1.3em; vertical-align: middle;">
+        <span class="toast"></span>
+      </p>
+
+      <p class="contact-item" data-copy="tel" data-label="Téléphone">
+        <img src="tel.png" style="height: 1.2em; vertical-align: middle;">
+        <span class="toast"></span>
+      </p>
+    </div>
 
     <div id="btn-envoyer-container" style="text-align:center; display: none; margin-top: 20px;">
       <p style="font-size: 16px; margin: 5px 0px;">Paiment sur place : CB, cheque ou espèces.</p>
@@ -955,7 +981,7 @@ footer{
   </aside>
 
   <div id="recap-mobile">
-    <div id="recap-selection-mobile">
+    <div class="recap-selection-mobile">
       0 bouteilles - 0€
     </div>
     <button id="btn-continuer-mobile" class="btn-checkout" onclick="continuer()" disabled>CONTINUER</button>
@@ -973,6 +999,24 @@ footer{
     </div>
   </div>
 
+  <div id="message-grosse-commande-mobile" style="display: none;">
+    <div class="recap-selection-mobile" style="font-weight: bold;margin-bottom: 10px;">
+      0 bouteilles - 0€
+    </div>
+    <div>
+      Pour les commandes supperieurs à 400€,
+      Veuillez nous contacter directement :
+    </div>
+    <p class="contact-item" data-copy="mail" data-label="Email">
+      <img src="email.png" style="height: 1.3em; vertical-align: middle;">
+      <span class="toast"></span>
+    </p>
+
+    <p class="contact-item" data-copy="tel" data-label="Téléphone">
+      <img src="tel.png" style="height: 1.2em; vertical-align: middle;">
+      <span class="toast"></span>
+    </p>
+  </div>
 
 </div>
 
@@ -1064,7 +1108,7 @@ recettes.forEach((nom, bIdx) => {
         <div class="format-label">${f.l} <br><span class="format-price">${f.p}€</span></div>
         <div class="qty-box">
           <button onclick="changeQty('${nom}','${f.l}',${f.p},-1,${bIdx},${fIdx})">-</button>
-          <input oninput="changeQtyManuel('${nom}','${f.l}',${f.p},Number(this.value),${bIdx},${fIdx})" type="number" inputmode="numeric" pattern="[0-9]*" id="qty-${bIdx}-${fIdx}" value="0">
+          <input oninput="changeQtyManuel('${nom}','${f.l}',${f.p},Number(this.value),${bIdx},${fIdx})" type="number" inputmode="numeric" pattern="[0-9]*" id="qty-${bIdx}-${fIdx}" value="0" max="100">
           <button onclick="changeQty('${nom}','${f.l}',${f.p},1,${bIdx},${fIdx})">+</button>
         </div>
       </div>`;
@@ -1241,15 +1285,35 @@ function renderCart() {
     `;
   });
 
-  if(total===0) document.getElementById('btn-continuer').disabled= true;
-  else document.getElementById('btn-continuer').disabled= false;
-
+  
   //mobile
-  if(total===0) document.getElementById('btn-continuer-mobile').disabled= true;
-  else document.getElementById('btn-continuer-mobile').disabled= false;
+  if(isMobile){
+    if(total===0) document.getElementById('btn-continuer-mobile').disabled= true;
+    else if(total>400) {
+      document.getElementById('message-grosse-commande-mobile').style.display = "block"
+      document.getElementById('recap-mobile').style.display= "none"
+    }
+    else {
+      document.getElementById('btn-continuer-mobile').disabled= false;
+      document.getElementById('message-grosse-commande-mobile').style.display = "none"
+      document.getElementById('recap-mobile').style.display= "flex"
+    }
+  } else {
+    if(total===0) document.getElementById('btn-continuer').disabled= true;
+    else if(total>400) {
+      document.getElementById('btn-continuer').style.display = "none"
+      document.getElementById('message-grosse-commande').style.display = "block"
+    }
+    else {
+      document.getElementById('btn-continuer').disabled= false;
 
-  document.getElementById("recap-selection-mobile").innerText = 
-      `${nbArticle} bouteille${nbArticle > 1 ? 's' : ''} - ${total}€`;
+      document.getElementById('message-grosse-commande').style.display = "none"
+      document.getElementById('btn-continuer').style.display = "unset"
+    }
+  }
+
+  document.querySelectorAll(".recap-selection-mobile").forEach(el => el.innerText = 
+      `${nbArticle} bouteille${nbArticle > 1 ? 's' : ''} - ${total}€`);
 
   renderInfos(true);
 }
@@ -1361,7 +1425,7 @@ function continuer(){
     el.classList.add('ouvert'))
   document.getElementById("btn-continuer-mobile").style.display = "none"
   document.getElementById("btn-continuer2-mobile").style.display = "unset"
-  document.getElementById("recap-selection-mobile").style.display = "none"
+  document.querySelectorAll(".recap-selection-mobile").forEach(el => el.style.display = "none")
 }
 
 function continuer2(){
@@ -1391,7 +1455,7 @@ function modifier(){
 
   document.getElementById("btn-continuer-mobile").style.display = "unset"
   document.getElementById("btn-continuer2-mobile").style.display = "none"
-  document.getElementById("recap-selection-mobile").style.display = "unset"
+  document.querySelectorAll(".recap-selection-mobile").forEach(el => el.style.display = "unset")
 
 }
 
