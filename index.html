@@ -1,176 +1,892 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Brasserie Sostra</title>
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-    <!--  -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bière Sostra</title>
+<link href="https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&family=Marcellus&display=swap" rel="stylesheet">
 
-  </head>
+<style>
+html {
+  scroll-behavior: smooth;
+}
 
-  <body>
-    <div id="header">
-        <a id="logo" href="#accueil">Brasserie Sostra</a>
-        <a class="link" href="#bieres">Les bières</a>
-        <a class="link" href="#tarifs">Tarifs</a>
-        <a class="link" href="#ingredients">Les Ingrédients</a>
-        <a class="link" href="#actualites">Actualités</a>
-        <a class="link" href="#contacts">Contacts</a>
+body{
+  font-family: Caudex, serif;
+  margin:0;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+/* NAVBAR */
+
+.navbar-desktop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:white;
+  padding: 20px 200px 0px 200px;
+  position:sticky;
+  top:0;
+  box-shadow: 0 13px 15px 13px white;
+}
+
+.navbar-desktop a, .side-menu a, .navbar-mobile a, .commande-btn-hero{
+  color:black;
+  text-decoration:none;
+  font-weight:700;
+  font-size: 15px;
+  font-family: Marcellus, sans-serif;
+  text-transform: uppercase;
+  text-shadow: 0.5px 0 0 currentColor;
+}
+
+.navbar-desktop a:hover{
+color: #BA8E23;
+}
+
+.navbar-desktop a img{
+  background-color: black;
+  /* L'image sert de masque */
+  -webkit-mask-image: url('logo.png');
+  mask-image: url('logo.png');
+  
+  /* On ajuste la taille du masque */
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  
+  /* Il faut donner une taille au bloc */
+  width: 100px;
+  height: 80px;
+  display: inline-block;
+
+  mask-position: center;
+}
+
+.navbar-desktop a img:hover{
+  background-color: #BA8E23;
+}
+
+.facebook svg{
+  height: 1.2em; /* 1.6x15 */
+  vertical-align: text-top;
+}
+
+.facebook svg:hover{
+  fill: #BA8E23;
+}
+
+.commande-btn{
+  background: #FF9900;
+  padding:10px 18px;
+  border-radius:5px;
+  font-weight:bold;
+}
+.commande-btn:hover{
+  background-color: #E68A00;
+  color: black!important;
+}
+.commande-btn:active{
+  background-color: #E68A00;
+  color: black!important;
+}
+
+.commande-btn-hero {
+  border-radius: 5px;
+  border: 2px solid black;
+  font-weight:bold;
+  padding:16px 28px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+.commande-btn-hero:hover {
+  background-color: #000; /* fond noir */
+  color: #fff; /* texte blanc */
+  border-color: #000; /* bord noir reste */
+}
+.commande-btn-hero:active {
+  background-color: #000; /* fond noir */
+  color: #fff; /* texte blanc */
+  border-color: #000; /* bord noir reste */
+}
+
+/* HERO IMAGE */
+
+.hero-desktop{
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  /* L'image PNG avec zones transparentes */
+  background-image: 
+    linear-gradient(0deg,rgba(255, 255, 0, 1) 0%, rgba(255, 153, 0, 1) 100%);
+  ;
+
+  /* Réglages pour que l'image soit bien centrée et ne se répète pas */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  overflow: hidden;
+}
+
+.hero-mobile{
+  display: none;
+}
+
+
+/* SECTIONS */
+
+section{
+  padding:80px 40px;
+  max-width:1200px;
+  margin:auto;
+  scroll-margin-top: 50px; 
+}
+
+h2{
+  text-align:center;
+  margin-bottom:50px;
+}
+
+/* BIÈRES */
+
+.beer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.beer{
+background:white;
+padding:18px;
+border-radius:6px;
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.beer .bouteille {
+display:flex;
+gap:20px;
+align-items:center;
+}
+@media (min-width: 600px) {
+  .beer.blonde:hover{
+  background: linear-gradient(0deg,#FFFF00 0%, #FF9900 100%);
+  }
+
+  .beer.ambree:hover{
+  background: linear-gradient(0deg,#F1C232 0%, #FF0000 100%);
+  }
+
+  .beer.ipa:hover{
+  background: linear-gradient(0deg,#FFFF00 0%, #00FF00 100%);
+  }
+
+  .beer.blanche:hover{
+  background: linear-gradient(0deg,#FFF 0%, #4A86E8 100%);
+  }
+
+  .beer.noire:hover{
+  background: linear-gradient(0deg,#38761D 0%, #000000 100%);
+  color: #FFF;
+  }
+
+  .beer.triple:hover{
+  background: linear-gradient(0deg,#D5A6BD 0%, #741B47 100%);
+  color: #FFF;
+  }
+
+  .beer.piment:hover{
+  background-image: url(Piment.jpg);
+  color: #FFF;
+  }
+    .beer.framboise:hover{
+  background: linear-gradient(0deg,#FFF 0%, #C8233C 100%);
+  }
+}
+
+.beer img{
+  width:80px;
+  height:320px;
+  object-fit:cover;
+  border-radius:4px;
+}
+
+.beer h3, .beer h2 {
+  margin: 0px;
+}
+
+/* FUT */
+
+.fut{
+  text-align:center;
+  max-width:80%;
+  margin:auto;
+  font-size: 1.2em;
+}
+
+.fut a {
+  color: #000;
+}
+
+/* INGREDIENTS */
+
+.ingredients{
+  text-align:center;
+}
+#ingredients{
+  background: linear-gradient(0deg,#FFFF00 0%, #00FF00 100%);
+}
+
+.ingredients img{
+  width:80%;
+}
+
+/* CONTACT */
+
+.contact{
+text-align:center;
+}
+/* FOOTER */
+
+footer{
+  background:#111;
+  color:white;
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+}
+
+footer a{
+  color: white
+}
+
+.side-menu {
+  display: none;
+}
+
+.navbar-mobile {
+  display: none;
+}
+
+/* Contact */
+.contact-block {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.contact-item img {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+
+.contact-item img:active, .contact-item img:hover {
+  border-bottom: 1px solid #ddd;
+}
+
+.contact-item .icon {
+  margin-right: 8px;
+}
+
+#toast {
+  position: absolute;
+  width: fit-content;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #222;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px) {
+
+
+
+  /* HERO */
+  .hero-desktop{display: none;}
+  .hero-mobile{
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:  
+      url(noise.svg),
+      radial-gradient(circle at 30% 30%, 
+        rgba(255,255,0,1) 0%, 
+        rgba(255,200,0,1) 40%, 
+        rgba(255,153,0,1) 100%
+      );
+    background-blend-mode: overlay;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    height: 70vh;
+    justify-content: space-around;
+  }
+
+  /*NAVBAR*/
+  .navbar-desktop{display: none;}
+  .navbar-mobile {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+    border-bottom: 1px solid #eee;
+    background: white;
+    height: 60px;
+    z-index: 102;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+  }
+
+  .commande-btn {
+    margin-left: auto;
+  }
+
+  .menu-btn {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav-title {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    display: unset;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 100;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* MENU */
+  .side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    background: white;
+    padding: 0px 20px;
+
+    transform: translateY(-100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    z-index: 101;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* état ouvert */
+  .side-menu.active {
+    transform: translateY(0);
+  }
+
+  /* liens */
+  .side-menu a {
+    text-decoration: none;
+    padding: 20px 0px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 1.1em;
+  }
+  .side-menu a:last-child {
+    border-bottom: none;
+  }
+
+
+  .beer.blonde{
+  background: linear-gradient(0deg,#FFFF00 0%, #FF9900 100%);
+  }
+
+  .beer.ambree{
+  background: linear-gradient(0deg,#F1C232 0%, #FF0000 100%);
+  }
+
+  .beer.ipa{
+  background: linear-gradient(0deg,#FFFF00 0%, #00FF00 100%);
+  }
+
+  .beer.blanche{
+  background: linear-gradient(0deg,#FFF 0%, #4A86E8 100%);
+  }
+
+  .beer.noire{
+  background: linear-gradient(0deg,#38761D 0%, #000000 100%);
+  color: #FFF;
+  }
+
+  .beer.triple{
+  background: linear-gradient(0deg,#D5A6BD 0%, #741B47 100%);
+  color: #FFF;
+  }
+
+  .beer.piment{
+  background-image: url(Piment.jpg);
+  color: #FFF;
+  }
+
+  .beer.framboise{
+  background: linear-gradient(0deg,#FFF 0%, #C8233C 100%);
+  }
+
+  section {
+    padding: 40px 40px;
+    scroll-margin-top: 60px;
+
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  #ingredients {
+    padding: 20px 0px;
+  }
+  .ingredients {
+    height: 200px;
+  }
+  .ingredients img {
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<!-- Desktop -->
+<nav class="navbar-desktop">
+  <a href="#"><img></a>
+  <a href="#bieres">Nos bières</a>
+  <a href="#fut">Fût et tireuse</a>
+  <a href="#ingredients">Nos ingrédients</a>
+  <a href="#contact">Contact</a>
+  <a class="facebook" href="https://www.facebook.com/p/Brasserie-Sostra-61555005142636/">
+    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook</title><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+  </a>
+  <a class="commande-btn" href="commande.html">Commander</a>
+</nav>
+<!-- Mobile -->
+
+<nav class="navbar-mobile">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <img style="height: 56px; vertical-align: middle;" src="logo.png">
+  <a class="commande-btn" href="commande.html">Commander</a>
+</nav>
+
+<!-- overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- menu -->
+<aside class="side-menu" id="sideMenu">
+  
+  <a href="#bieres">Nos bières</a>
+  <a href="#fut">Fût et tireuse</a>
+  <a href="#ingredients">Nos ingrédients</a>
+  <a href="#contact">Contact</a>
+  <a class="facebook" href="https://www.facebook.com/p/Brasserie-Sostra-61555005142636/">
+    <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook</title><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>
+  </a>
+</aside>
+
+
+<!-- IMAGE PRINCIPALE -->
+
+<div class="hero-desktop">
+  <h1 style="text-align: center; padding-top: 20px; font-size: 2.5em;">Brasserie
+    <img src="logo.png" style="height: 3em; vertical-align: middle;">
+    la bière artisanale de la Souterraine
+  </h1>
+  <a class="commande-btn-hero" href="commande.html">PASSER COMMANDE</a>
+  
+  <img src="hero.png" style="width: 100vw; max-width: 1400px; margin-top: auto;">
+</div>
+
+<div class="hero-mobile">
+  <h1>Brasserie </h1>
+  <img src="logo.png" style="height: 10em; "> 
+  <h2>La bière artisanale <br>de la Souterraine</h2>
+  <a class="commande-btn-hero" href="commande.html">PASSER COMMANDE</a>
+</div>
+
+
+<!-- BIÈRES -->
+
+<section id="bieres">
+
+<h2>Nos bières</h2>
+
+<div class="beer-grid">
+
+<div class="beer blonde">
+  <h2>Blonde</h2>
+  <div class="bouteille">
+    <img src="bouteilles/blonde.png">
+    <div>
+      <h3>Légère et rafraîchissante</h3>
+      <i>Alcool : 4.4%</i><br>
+      Une douce amertume soutient des arômes d’agrumes et de fleurs pour 
+      une bière désaltérante et facile à boire. 
     </div>
+  </div>
+</div>
 
-    <div id="header-phone" onclick="tooglePhoneMenu()">
-      <div id="header-header-phone" >
-        <div id="hamburger">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <a id="logo">Brasserie Sostra</a>
-      </div>
-      <div id="menu-phone">
-        <a class="link phone-menu" href="#accueil">Accueil</a>
-        <a class="link phone-menu" href="#bieres">Les bières</a>
-        <a class="link phone-menu" href="#tarifs">Tarifs</a>
-        <a class="link phone-menu" href="#ingredients">Les Ingrédients</a>
-        <a class="link phone-menu" href="#actualites">Actualités</a>
-        <a class="link phone-menu" href="#contacts">Contacts</a>
-      </div>
+<div class="beer ambree">
+  <h2>Ambrée</h2>
+  <div class="bouteille">
+    <img src="bouteilles/ambrée.png">
+    <div>
+      <h3>Ronde et chaleureuse</h3>
+      <i>Alcool : 5%</i><br>
+      De douces notes de malt caramélisé s’accompagnent d’une fine touche 
+      boisée et herbacée pour une bière équilibrée et chaleureuse.
     </div>
+  </div>
+</div>
 
-
-    <div id="accueil" class="page">
-      <h1>Bière artisanale de la Souterraine</h1>
-      <br>
-      <div id="text-container">
-        <img src="Logo.png"/>
-        <div>
-          C'est au croisement des routes commerciales reliant Limoges à Paris et 
-          Clermont Ferrand à Poitier, que s'est construite la Souterraine, une 
-          jolie ville médiévale dévelopée autour de son abbatiale. Une ville à 
-          l'architecture robuste et austère qui rappelle la vigueure de ses 
-          habitants d'autrefois. On ne peut s'y promener sans être marqué par son 
-          histoire encore si présente. 
-          <br>
-          <br>
-          C'est aussi une ville vivante, où habitants et passants aiment se retrouver 
-          au marché (au pied de l'église), au bars (Les Marroniers), au café 
-          (Le Café Chaud), restautant (L'Osmose) et tiers lieux (La Maison d'à
-          Côté)... C'est au coeur de ce bourg si animé que s'est créée la brasserie 
-          Sostra. Sa bière se veut imprégnée de cette âme ancestrale et jeune qui 
-          vit à la Souterraine.      
-        </div>
-        
-      </div>
-      <br>
-      <h2><a href="#bieres">Découvrez la bière Sostra, la bière de Sostranie. </a></h2>
-
+<div class="beer ipa">
+  <h2>IPA</h2>
+  <div class="bouteille">
+    <img src="bouteilles/ipa.png">
+    <div>
+      <h3>Amère et parfumée.</h3>
+      <i>Alcool : 4%</i><br>
+      Un profil dominé par des notes d'herbes fraîches et de fleurs soutenu par 
+      une amertume franche pour une bière de caractère.
     </div>
+  </div>
+</div>
 
-    <div id="bieres" class="page">
-      <img src="Catalogue été 2025 Recto.png" />
-      <img src="Catalogue été 2025 Verso.png" />
-      <!-- <embed src="Catalogue été 2025 Verso.pdf" width="800px" height="2100px" /> -->
+<div class="beer noire">
+  <h2>Noire</h2>
+  <div class="bouteille">
+    <img src="bouteilles/noire.png">
+    <div>
+      <h3>Onctueuse et intense.</h3>
+      <i>Alcool : 5.6%</i><br>
+        Des notes marquées de cacao pur et de céréales grillées se mêlent à une 
+        texture soyeuse pour une bière de dégustation, ronde et réconfortante.
     </div>
+  </div>
+</div>
 
-    <div id="actualites" class="page">
-     Retrouvez l'actualité de la <a href="https://www.facebook.com/profile.php?id=61555005142636">Sostra sur facebook</a>.
+<div class="beer blanche">
+  <h2>Blanche</h2>
+  <div class="bouteille">
+    <img src="bouteilles/blanche.png">
+    <div>
+      <h3>Vive et florale.</h3>
+      <i>Alcool : 5%</i><br>
+      Les notes céréalières du blé s'associent aux nuances subtilement épicées et 
+      florales du houblon pour une bière légère et désaltérante.
     </div>
+  </div>
+</div>
 
-    <div id="tarifs" class="page">
-      Toutes les recettes sont au même prix:
-      <br/>
-      <br/>
-      
-      - Bouteille de 75cl: 6€
-      <br/>
-      <br/>
-      - Bouteille de 50cl: 4€
-      <br/><br/><br/>
-      - Carton de 6 x 75cl: 36€
-      <br/>
-      <br/>
-      - Carton de 8 x 50cl: 32€
+<div class="beer piment">
+  <h2>Piment</h2>
+<div class="bouteille">
+  <img src="bouteilles/piment.png">
+  <div>
+    <h3>Ardente et caractérielle.</h3>
+    <i>Alcool : 7.1%</i><br>
+    La chaleur montante du piment d'Espelette réveille des notes de céréales 
+    grillées pour une bière piquante et audacieuse.
+  </div>
+</div>
+</div>
 
+<div class="beer framboise">
+  <h2>Framboise</h2>
+  <div class="bouteille">
+    <img src="bouteilles/framboise.png">
+    <div>
+      <h3>Fruitée et acidulée.</h3>
+      <i>Alcool : 4.8%</i><br>
+      L'éclat de la framboise fraîche domine une base maltée légère pour une 
+      bière finement pétillante et très rafraîchissante.
     </div>
+  </div>
+</div>
 
-    <div id="ingredients" class="page">
-      La bière c'est 4 ingrédients:
-      <br/>
-      <br/>
-      - de l'<span>eau</span> : dans la Sostra, c'est l'eau courante de la Souterraine.
-      <br/>
-      <br/>
-      - du <span>malt</span> : il provient de <a href="https://www.lesmaltiers.fr/">la malterie d'Issoudun</a> dans le Berry, région prolifique dans la culture de l'orge !
-      <br/>
-      <br/>
-      - du <span>houblon</span> : provient autant que possible de <a href="https://www.facebook.com/p/Houblon-Cours-Cocotte-100057098004384/">"Cours Cocotte"</a> une houblonnière située à Arlanc dans le Puy de Dôme (69). Certains houblons proviennent <a href="https://www.comptoir-houblon.fr/"> d'Alsace</a>.
-      <br/>
-      <br/>
-      - des <span>levures</span> : selon la recette, elles sont produites par les laboratoires <a href="https://fermentis.com">"fermentis"</a> et <a href="https://www.lallemandbrewing.com">"lallemand"</a>.
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      Les <span>bouteilles</span> sont fournies par <a href="https://www.temaco.fr/fr/">Temaco</a> une entreprise corrézienne.
+<div class="beer triple">
+  <h2>Triple</h2>
+  <div class="bouteille">
+    <img src="bouteilles/triple.png">
+    <div>
+      <h3>Puissante et épicée.</h3>
+      <i>Alcool : 9%</i><br>
+      Des notes de banane mûre et de clou de girofle s'appuient sur un 
+      corps malté généreux pour une bière forte et équilibrée.
     </div>
+  </div>
+</div>
 
-    <div id="contacts" class="page">
-      <h3>Retrouvez les bières Sostra sur le marché de la Souterraine le samedi matin.</h3>
-      <div>
-        <div>
-          <h3>Adresse & Contacts</h3>
-          Brasserie Sostra<br/>
-          7 rue de la font aux moines<br/>
-          23300 LA SOUTERRAINE<br/><br/>
-          07/82/81/57/18<br/>
-          brasseriesostranienne(a)gmail.com<br/>
-        </div>
-        <br/><br/>
-      </div>
+</div>
+
+</section>
+
+
+<!-- FUT -->
+
+<section id="fut">
+
+<h2>Fût et tireuse</h2>
+
+<div class="fut">
+<p>
+Nous proposons également la location de fûts et de tireuses pour vos événements.<br>
+Mariages, fêtes, associations ou événements professionnels. <br>
+<a href="#contact"ter>Contactez-nous</a> pour connaître les disponibilités et les tarifs.
+</p>
+</div>
+
+</section>
+
+
+<!-- INGREDIENTS -->
+
+<section id="ingredients">
+
+<h2>Nos ingrédients</h2>
+
+<div class="ingredients">
+
+<img src="ingredients.png">
+
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+<h2>Contact</h2>
+
+<div class="contact">
+
+<p class="contact-item" data-copy="mail" data-label="Email">
+  <img src="email.png" style="height: 1.3em; vertical-align: middle;">
+</p>
+<p class="contact-item" data-copy="tel" data-label="Téléphone">
+  <img src="tel.png" style="height: 1.2em; vertical-align: middle;">
+</p>
+<p>
+  Adresse : 7 rue de la Font aux Moines, 23300 La Souterraine
+</p>
+<p>Suivez-nous sur <a href="https://www.facebook.com/p/Brasserie-Sostra-61555005142636/" style="color: #000;">facebook</a> pour les nouveautés et événements.</p>
+
+<div id="toast"></div>
+</div>
+
+</section>
+
+
+<footer>
+<p>L'abus d'alcool est dangereux pour la santée, à consommer avec modération.</p>
+
+<a href="mentions-legales.html">Mentions légales</a> &
+<a href="/cgv.html">CGV</a>
+
+<p>© 2026 Brasserie Sostra</p>
+
+</footer>
+<!-- MODALE AGE -->
+<div id="ageModal" style="
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  visibility: hidden;
+">
+  <div style="
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 350px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  ">
+    <h2 style="margin-bottom: 15px;">Bienvenue à la brasserie Sostra</h2>
+    <p style="margin-bottom: 25px;">Nos bières sont réservées aux personnes majeures. Avez-vous plus de 18 ans ?</p>
+    <div style="display: flex; justify-content: space-between; gap: 10px;">
+      <button onclick="rejectAge()" style="
+        flex:1;
+        padding: 10px 15px;
+        border: 1px solid #aaa;
+        background: #eee;
+        color: #333;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: 'Caudex', serif;
+      ">Non, je ne suis pas majeur – quitter</button>
+      <button onclick="acceptAge()" style="
+        flex:1;
+        padding: 10px 15px;
+        border: none;
+        background: #FF9900;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: 'Caudex', serif;
+        font-weight: bold;
+      ">Oui, j’ai plus de 18 ans</button>
     </div>
+  </div>
+</div>
 
-    <div id="footer">
-      <img src="footer-img.png"  width="100%"/>
-      <!-- <div id="message">
-        L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
-      </div> -->
-    </div>
-  </body>
+<script>
+// --- ACTIONS ---
+function acceptAge() {
+  localStorage.setItem("age_verified", "true");
+  document.getElementById("ageModal").style.display = "none";
+  document.body.style.overflow = "unset"; // autorise scroll
+}
 
-  <script>
-    function setHash() {
-      pages = document.getElementsByClassName('page')
-      for (var i = 0; i < pages.length; ++i) pages[i].style.display = 'none';
+function rejectAge() {
+  window.location.href = "https://www.youtube.com/channel/UCXptamDYEVcU4JCio30hYTw"; // redirection mineur
+}
 
-      links = document.getElementsByClassName('link')
-      for (var i = 0; i < links.length; ++i) links[i].classList.remove('selected');
+// --- INIT ---
+window.addEventListener("load", function() {
+  const age = localStorage.getItem("age_verified");
+  if (age !== "true") {
+    const modal = document.getElementById("ageModal");
+    modal.style.visibility = "visible";
+    document.body.style.overflow = "hidden"; // bloque scroll derrière la modale
+  }
+});
+</script>
+</body>
 
-      location.hash = location.hash ? location.hash : '#accueil'
+<script>
+const isMobile = window.innerWidth <= 600;
 
-      const el = document.querySelector(location.hash)
-      if (el != null) el.style.display = 'block';
+if (isMobile) {
 
-      const a = document.querySelector(`a[href="${location.hash}"]`)
-      if (a != null) a.classList.add('selected')
+  const navbar = document.querySelector('.navbar-mobile');
+  const sideMenu = document.querySelector('.side-menu');
+  const menuBtn = document.getElementById('menuBtn');
+  const overlay = document.getElementById('overlay');
+  let isOpen = false;
+
+  function updateMenuPosition() {
+    const height = navbar.offsetHeight;
+    sideMenu.style.top = height + 'px';
+  }
+
+  updateMenuPosition();
+  window.addEventListener('resize', updateMenuPosition);
+
+
+  function openMenu() {
+    sideMenu.classList.add('active');
+    overlay.classList.add('active');
+    isOpen = true;
+    menuBtn.textContent = '✕';
+  }
+
+  function closeMenu() {
+    sideMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    isOpen = false;
+    menuBtn.textContent = '☰';
+  }
+
+  menuBtn.addEventListener('click', () => isOpen ? closeMenu() : openMenu() );
+  document.querySelector(".navbar-mobile img").addEventListener('click', () => isOpen ? closeMenu() : openMenu() );
+  overlay.addEventListener('click', closeMenu);
+  sideMenu.addEventListener('click', closeMenu);
+
+}
+
+// contact
+document.querySelectorAll('.contact-item').forEach(el => {
+  el.addEventListener('click', async () => {
+    let text;
+    if(el.dataset.copy === 'tel'){
+      w = ['57', '82', '81', '07', '18']
+      t = [3, 1, 2, 0, 4]
+      text = t.map(i => w[i]).join(" ");
+    } else if (el.dataset.copy === 'mail'){
+      w = ['ie', 'sser', '&', 'gm', 'co', '*', 'bra', 'sostra', 'ail']
+      t = [6, 1, 0, 7, 2, 3, 8, 5, 4]
+      text = t.map(i => w[i]).join("").replace('&', '@').replace('*', '.') + 'm'
+    } else return;
+    const label = el.dataset.label;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(`${label} copié`);
+    } catch (err) {
+      console.error('Erreur copie', err);
     }
+  });
+});
 
-    addEventListener("hashchange", setHash);
-    setHash();
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
 
-    function tooglePhoneMenu(){
-      if (document.getElementById('header-phone').style.maxHeight == '60px'){
-        document.getElementById('header-phone').style.maxHeight = '800px'
-      } else {
-        document.getElementById('header-phone').style.maxHeight = '60px'
-      }
-    }
-    tooglePhoneMenu();
-  </script>
+document.querySelectorAll(".beer").forEach(el => {
+  el.addEventListener('click', () => {
+    el.classList.toggle('clicked')
+  })
+})
+
+
+
+</script>
+
 </html>

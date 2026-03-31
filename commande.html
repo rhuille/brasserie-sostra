@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commande Sostra</title>
+<link href="https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&family=Marcellus&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+emailjs.init("ZJiKrxTm0rKoFGav8");
+})();
+</script>
+
+<style>
+
+
+:root {
+  --primary: #f39c12;
+  --primary-dark: #d35400;
+  --bg: #f4f7f6;
+  --text: #2c3e50;
+  --white: #ffffff;
+  --card-img-width: 120px;
+  /* Largeur pour l'image 800x1280px mise à l'échelle */
+}
+
+/* On cible tous les éléments qui ont souvent une taille bizarre par défaut */
+button, 
+input, 
+select, 
+textarea {
+    font-size: inherit; /* Ou 'inherit' pour copier le parent */
+    font-family: inherit;
+    line-height: inherit;
+}
+
+body {
+  font-family: 'Caudex', serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Aligne Navbar et App-container verticalement */
+  
+  height: 100vh; /* Toute la hauteur de l'écran */
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;/* Aligne Viewport et Aside horizontalement */
+  flex-grow: 1;  /* Prend tout l'espace restant sous la navbar */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.viewport {
+  flex-grow: 1; /* Prend tout l'espace restant à gauche */
+  overflow-x: hidden;
+  position: relative;
+}
+
+.slider {
+  display: flex;
+  width: 300%; 
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page {
+  width: calc(100% / 3); /* Correspond à 100% du viewport */
+  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.slider.etape-2 {
+  transform: translateX(calc(-100% / 3));;
+}
+
+.slider.etape-3 {
+  transform: translateX(calc(-100% / 3 * 2));
+}
+
+a {
+  color:  var(--text);
+}
+
+/*NAVBAR*/
+
+.navbar-desktop {
+  flex-shrink: 0; /* Empêche la navbar de s'écraser */
+
+  padding:0px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  background: white;
+  position: sticky;
+  top: 0;
+
+  height: 85px;
+  
+}
+
+
+.navbar-desktop a, .side-menu a{
+  color:black;
+  text-decoration:none;
+  font-weight:700;
+  font-size: 15px;
+  font-family: Marcellus, sans-serif;
+  text-transform: uppercase;
+  text-shadow: 0.5px 0 0 currentColor;
+  cursor: pointer;
+}
+
+.navbar-desktop a:hover{
+  color: #BA8E23;
+}
+
+.navbar-desktop a img{
+  background-color: black;
+  /* L'image sert de masque */
+  -webkit-mask-image: url('logo.png');
+  mask-image: url('logo.png');
+  
+  /* On ajuste la taille du masque */
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  
+  /* Il faut donner une taille au bloc */
+  width: 100px;
+  height: 80px;
+  display: inline-block;
+
+  mask-position: center;
+}
+
+.navbar-desktop a img:hover{
+  background-color: #BA8E23;
+}
+.navbar-mobile {
+  display: none;
+}
+
+
+
+/*--- beer grid ---*/
+
+.beer-grid { 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.beer-card {
+  background: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  display: flex;
+  border: 1px solid #eee;
+  overflow: hidden;
+  /* Pour le border-radius de l'image */
+  transition: box-shadow 0.2s;
+}
+.beer-card:hover { 
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+/* --- Zone Image --- */
+.beer-image-container {
+  width: var(--card-img-width);
+  flex-shrink: 0; /* Ne pas réduire l'image */
+  background: #eee; /* Couleur de fond temporaire */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.beer-image-container img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  /* Conserver les proportions de la bouteille */
+  display: block;
+}
+
+/* --- Zone Contenu --- */
+.beer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.beer-info h3 { 
+  margin: 10px;
+  font-size: 1.6rem;
+  color: #333;
+   display: inline-block;
+}
+
+/* Style de la ligne de format */
+.format-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 8px;
+  border-radius: 10px;
+  margin: 2px 0;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+/* MISE EN VALEUR DE LA LIGNE ACTIVE */
+.format-row.active-row {
+  background-color: #fff9eb;
+  border-color: rgba(243, 156, 18, 0.3);
+}
+.format-row.active-row .format-label { 
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+.format-row.active-row .qty-box { 
+  background: var(--primary);
+}
+.format-row.active-row .qty-box input { 
+  color: white;
+}
+
+.format-label { 
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #666;
+  transition: 0.2s;
+}
+.format-price { 
+  font-weight: 800;
+  color: #999;
+  margin-left: 5px;
+}
+.active-row .format-price { 
+  color: var(--primary-dark);
+}
+
+/* Contrôles de quantité */
+.qty-box { 
+  display: flex;
+  align-items: center;
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 2px;
+  transition: 0.2s;
+}
+.qty-box button {
+  background: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.qty-box button:active { 
+  background: #f0f0f0;
+}
+.qty-box input { 
+  width: 35px;
+  border: none;
+  text-align: center;
+  background: transparent;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Panier latéral */
+
+.cart-item { 
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+}
+.cart-total { 
+  font-size: 1.5rem;
+  padding-top: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+.btn-checkout {
+  font-family: Marcellus, sans-serif;
+  text-decoration:none;
+  font-weight:700;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-shadow: 0.5px 0 0 currentColor;
+
+  background: #FF9900;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  /* font-size: 1.3rem; */
+  
+  padding:10px 18px;
+  border-radius:5px;
+}
+
+#avant-envoyer {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.btn-checkout:hover {
+  background-color: #E68A00;
+}
+
+.btn-link{
+  background:none;
+  border:none;
+  color:#666;
+  text-decoration:underline;
+  cursor:pointer;
+  text-align: start;
+  margin: 10px 0px;
+}
+
+.btn-checkout:disabled {
+  background-color: #E0E0E0; /* Gris clair neutre */
+  color: #999999;           /* Texte gris foncé pour le contraste */
+  border: 1px solid #CCCCCC;
+  cursor: not-allowed;     /* Le symbole "interdit" au survol */
+  opacity: 0.7;
+  pointer-events: none;    /* Désactive tous les événements de clic/hover */
+}
+
+
+
+
+#cart-sidebar select, #cart-sidebar input, #cart-sidebar textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-radius:4px;
+  box-sizing: border-box;
+}
+
+#main-2 select, #main-2 input, #main-2 textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-radius:4px;
+  box-sizing: border-box;
+}
+
+/* --- */
+.infos-hidder-wrapper {
+  display: grid;
+  /* On définit une seule ligne qui prend 0 fraction de l'espace */
+  grid-template-rows: 0fr; 
+  transition: grid-template-rows 0.5s ease;
+  overflow: hidden;
+}
+
+/* Quand on ajoute cette classe, la ligne prend toute la place du contenu */
+.infos-hidder-wrapper.ouvert {
+  grid-template-rows: 1fr;
+}
+
+#infos-hidder {
+  min-height: 0; 
+}
+
+#cart-sidebar {
+  display: none;
+}
+
+
+/* MODAL Contact*/
+
+/* Le fond de la popup (caché par défaut) */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5); /* Fond sombre transparent */
+}
+
+/* La boîte blanche au centre */
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Bouton fermer (X) */
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/*form tel et nom*/
+
+.form-group{
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  margin-bottom:5px;
+  font-weight:500;
+  font-size: 1.1rem;
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  font-size:14px;
+}
+
+input:focus, select:focus{
+  outline:none;
+  border-color:#BA8E23;
+}
+
+/* états des inputs */
+#main-2 input.valid{
+  border-color:#2e7d32;
+  background:#e6fff1;
+}
+
+#main-2 input.invalid{
+  border-color:#c62828;
+  background:#fdecea;
+}
+
+/* messages */
+.error{
+  color:#c62828;
+  font-size:12px;
+  margin-top:4px;
+  opacity:0;
+  transform:translateY(-5px);
+  transition:0.2s;
+}
+
+.success{
+  color:#2e7d32;
+  font-size:12px;
+  margin-top:4px;
+  opacity:0;
+  transform:translateY(-5px);
+  transition:0.2s;
+}
+
+/* affichage actif */
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* -- */
+
+.hidden.success-wrapper{
+  display:none;
+}
+
+.success-wrapper{
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f8f6f2;
+}
+
+.success-card{
+  max-width:500px;
+  width:100%;
+  background:white;
+  padding:40px 30px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  text-align:left;
+  }
+
+.success-card h2{
+  text-align:center;
+  margin-bottom:20px;
+  color:#2b2b2b;
+}
+
+.intro{
+  text-align:center;
+  margin-bottom:10px;
+  font-size:16px;
+}
+
+.info{
+  text-align:center;
+  font-size:14px;
+  color:#666;
+  margin-bottom:25px;
+}
+
+.summary{
+  background:#faf8f3;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:20px;
+}
+
+.summary h3{
+  margin-bottom:10px;
+  margin-top:0px;
+  font-size:16px;
+}
+
+.summary pre{
+  margin:0;
+  white-space:pre-wrap;
+  font-size:14px;
+  font-family: inherit;
+}
+
+.rdv{
+  margin-top:10px;
+  font-size:14px;
+}
+
+.outro{
+  text-align:center;
+  margin:20px 0;
+  font-weight:500;
+}
+
+.creneau-input {
+  display: flex;
+  gap: 50px;
+}
+
+/* contacts */
+
+.contact-block {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.contact-item {
+  padding: 10px 0px;
+}
+
+.contact-item img {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+
+.contact-item img:active, .contact-item img:hover {
+  border-bottom: 1px solid #ddd;
+}
+
+.contact-item .icon {
+  margin-right: 8px;
+}
+
+.toast {
+  position: absolute;
+  width: fit-content;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #222;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-40px);
+}
+
+
+@media (min-width: 600px) {
+  #cart-sidebar {
+    width: 360px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-left: 1px solid #ddd;
+    padding: 10px 25px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 85px);
+    box-sizing: border-box;
+    
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .side-menu {
+    display: none;
+  }
+
+  #recap-mobile {
+    display: none;
+  }
+
+  .recap-selection, .recap-infos {
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  #cart-sidebar {
+    display: none;
+  }
+
+  /* NAVBAR */
+  .navbar-desktop{display: none;}
+  .navbar-mobile {
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+    border-bottom: 1px solid #eee;
+    background: white;
+    height: 60px;
+    box-sizing: border-box;
+    z-index: 102;
+    flex-shrink: 0;
+  }
+
+  .menu-btn {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .nav-title {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    display: unset;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 100;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* MENU */
+  .side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    background: white;
+    padding: 20px;
+
+    transform: translateY(-100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    z-index: 101;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* état ouvert */
+  .side-menu.active {
+    transform: translateY(0);
+  }
+
+  /* liens */
+  .side-menu a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+  }
+  /* fin navbar */
+  #app-container {
+    flex-direction: column;
+  }
+
+  #recap-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+  }
+  #recap-mobile .btn-checkout {
+    margin: 0;
+  }
+
+  .success-wrapper {
+    background-color: white;
+  }
+
+  .success-card {
+    box-shadow: none;
+  }
+
+  .creneau-input {
+    flex-direction: column;
+    gap: unset;
+  }
+
+  a.legal-link {
+    text-transform: capitalize;
+    text-decoration: underline;
+    font-family: 'Caudex', serif;
+    font-weight: unset;
+    text-shadow: unset;
+    color: var(--text);
+  }
+  
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+}
+</style>
+</head>
+<body>
+
+  <!-- DEBUT NAVABR -->
+
+  <!-- 1/ NAV DESKTOP -->
+<nav class="navbar-desktop">
+  <a href="/index.html">&#8592; Retour au site</a>
+  <div style="display: flex; gap: 10px;">
+    <h1>Commander des bières</h1>
+    <a href="/index.html"><img></a>
+  </div>
+  <a id="contact-btn">Contact</a>
+</nav>
+
+  <!-- 1/ NAV MOBILE -->
+
+<nav class="navbar-mobile">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <img style="height: 56px; vertical-align: middle;" src="logo.png">
+  <div class="nav-title">
+    Commander des bières 
+  </div>
+</nav>
+
+<!-- overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- menu -->
+<aside class="side-menu" id="sideMenu">
+  <a href="/index.html">← Retour au site</a>
+  <div class="contact-block">
+    <a style="padding: 10px 0px; display: inline-block;">Contact</a>
+
+    <div class="contact-item" data-copy="mail" data-label="Email">
+      <span class="icon">✉️</span>
+      <img src="email.png" style="height: 1.2em; vertical-align: middle;">
+      <span class="toast"></span>
+    </div>
+
+    <div class="contact-item" data-copy="tel" data-label="Téléphone">
+      <span class="icon">📞</span>
+      <img src="tel.png" style="height: 1.2em; vertical-align: middle;">
+      <span class="toast"></span>
+    </div>
+
+
+    <div class="contact-item" data-copy="adresse" data-label="Adresse">
+      <span class="icon">🏠</span>
+      <span class="text" style="color: black;">
+        7 rue de la Font aux moines,<br> 23300 La Souterraine
+      </span>
+      <span class="toast"></span>
+
+    </div>
+  </div>
+  <div style="font-size: 15px;">
+    L'abus d'alcool est dangereux pour la santée, à consommer avec modération.
+    <br>
+    <a href="/mentions-legales.html" target="_blank" class="legal-link">Mentions Legales</a> & 
+    <a href="/cgv.html" target="_blank" class="legal-link">CGV</a>
+  </div>
+</aside>
+<!-- FIN NAVBAR -->
+
+
+<div id="app-container" class="app-container">
+  <div class="viewport">
+    <div class="slider" id="slider">
+      <section id="main-1" class="page">
+        <div style="margin-bottom: 5px; font-style: italic;">Étape 1 sur 2</div>
+        <h1 style="text-align: center; margin-top: 0px;">
+          Votre selection
+        </h1>
+        <div class="beer-grid" id="grid"></div>
+        <footer>
+          <p>L'abus d'alcool est dangereux pour la santée, à consommer avec modération.</p>
+          <a href="mentions-legales.html" target="_blank">Mentions légales</a> &
+          <a href="cgv.html" target="_blank">CGV</a>
+        </footer>
+      </section>
+      
+      <section id="main-2" class="page">
+        <div style="margin-bottom: 5px; font-style: italic;">Étape 2 sur 2</div>
+          <h1 style="text-align: center; margin-top: 0px;">
+            Vos informations
+          </h1>
+
+          <h2>Coordonées</h2>
+
+          <div class="form-group">
+            <label for="nom">Nom et prénom</label>
+            <input 
+              type="text" 
+              id="input-nom" 
+              placeholder="Ex : Antoine Dupont"
+              autocomplete="name"
+              required>
+            <small class="error" id="error-nom"></small>
+            <small class="success" id="success-nom"></small>
+          </div>
+          <div class="form-group">
+            <label for="tel">Téléphone <br>
+              <span style="font-size: 0.8rem;">(Pour confirmation de commande)</span>
+            </label>
+            <input 
+              type="tel" 
+              id="input-tel" 
+              placeholder="Ex : 06 12 34 56 78"
+              inputmode="tel"
+              autocomplete="tel"
+              required>
+            <small class="error" id="error-tel"></small>
+            <small class="success" id="success-tel"></small>
+          </div>
+
+          <h2>Mode de réception</h2>
+
+          <p>Le retrait de la commande se fait à la brasserie.</p>
+          <p>Paiment accepté : CB, chèque ou espece.</p>
+
+          <h2>Notre rendez vous</h2>
+          <div class="creneau-input">
+            <div>
+              <label for="jour">Jour</label>
+              <select id="input-jour" id="jour" name="jour_rdv"></select>
+            </div>
+
+            <div>
+              <label for="heure">Heure</label>
+              <select id="input-heure" id="heure" name="heure_rdv">
+                <option value="08:45">08h45</option>
+                <option value="17:00">17h00</option>
+              </select>
+            </div>
+          </div>
+
+          <textarea id="textarea-message" name="message" placeholder="Message"></textarea>
+
+          <input type="text" name="honeypot" style="display:none">
+      </section>
+
+      <section id="main-3" class="page">
+        <div class="recap-selection"></div>
+        <button class="btn-modifier btn-link" onclick="modifier()" style="visibility: hidden;">&#8592; Modifier ma selection</button>
+
+        <div class="recap-infos"></div>
+        <button class="btn-modifier btn-link" onclick="modifier2()" style="visibility: hidden;">&#8592; Modifier mes informations</button>
+      </section>
+    </div>
+  </div>
+
+  <aside id="cart-sidebar">
+      <div class="recap-selection"></div>
+
+      <button class="btn-modifier btn-link" onclick="modifier()" style="visibility: hidden;">&#8592; Modifier ma selection</button>
+      
+      <div class="recap-infos"></div>
+
+    
+    <button id="btn-continuer" class="btn-checkout" onclick="continuer()" disabled autocomplete="off">CONTINUER</button>
+
+    <div id="btn-envoyer-container" style="text-align:center; display: none; margin-top: 20px;">
+      <p style="font-size: 16px; margin: 5px 0px;">Paiment sur place : CB, cheque ou espèces.</p>
+      <label style="font-size: 16px; text-align: center; margin: 5px 0px;">
+        <input id="input-cgv-desktop" style="width: unset;" type="checkbox" required autocomplete="off">
+        J’accepte les <a href="/cgv.html" target="_blank">conditions de commande</a>
+      </label>
+      <button id="btn-envoyer" class="btn-checkout" onclick="envoyer()" disabled style="margin-top: 0px;">Envoyer ma commande</button>
+      <div id="avant-envoyer" >Confirmation par SMS</div>
+    </div>
+  </aside>
+
+  <div id="recap-mobile">
+    <div id="recap-selection-mobile">
+      0 bouteilles - 0€
+    </div>
+    <button id="btn-continuer-mobile" class="btn-checkout" onclick="continuer()" disabled>CONTINUER</button>
+    <button id="btn-continuer2-mobile" class="btn-checkout" onclick="continuer2()" disabled style="display: none;">
+      PASSER AU RECAPITULATIF
+    </button>
+    <div id="btn-envoyer-mobile" style="display: none; text-align: center;">
+      <p style="font-size: 16px; margin: 5px 0px;">Paiment sur place : CB, cheque ou espèces.</p>
+      <label style="font-size: 16px; text-align: center; margin: 5px 0px;">
+        <input id="input-cgv" style="width: unset;" type="checkbox" required autocomplete="off">
+        J’accepte les <a href="/cgv.html" target="_blank">conditions de commande</a>
+      </label>
+      <button class="btn-checkout" onclick="envoyer()" disabled>Envoyer ma commande</button>
+      <div id="avant-envoyer-mobile" style="display: none; font-size: 15px; ">Confirmation par SMS</div>
+    </div>
+  </div>
+
+
+</div>
+
+<div id="contact-popup" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>Contact</h2>
+
+    <p class="contact-item" data-copy="mail" data-label="Email">
+      <img src="email.png" style="height: 1.3em; vertical-align: middle;">
+      <span class="toast"></span>
+    </p>
+
+    <p class="contact-item" data-copy="tel" data-label="Téléphone">
+      <img src="tel.png" style="height: 1.2em; vertical-align: middle;">
+      <span class="toast"></span>
+    </p>
+
+    <p style="color: black;">
+      Adresse : 7 rue de la Font aux Moines, 23300 La Souterraine
+    </p>
+
+  </div>
+</div>
+
+<div id="success" class="success-wrapper hidden">
+
+  <div class="success-card">
+
+    <h2>Commande envoyée ! 🍻</h2>
+
+    <p class="intro">
+      Merci pour votre commande.
+    </p>
+
+    <p class="info">
+      Nous vous contactons rapidement par SMS pour confirmer votre commande.
+    </p>
+
+    <div class="summary">
+      <h3>Votre sélection</h3>
+      <pre id="success-selection"></pre>
+
+      <p class="rdv">
+        <strong>Total :</strong> <span id="success-total"></span>
+        <br>
+        <i>Paiement sur place (CB, chèque ou espèces)</i>
+      </p>
+      <h3>Rendez-vous</h3>
+      <span id="success-rdv"></span>
+
+    </div>
+
+    <p class="outro">
+      À très bientôt à la brasserie !
+    </p>
+    <p class="outro">
+      <a href="/index.html" class="btn-link">Retour au site</a>
+    </p>
+  </div>
+</div>
+
+<script>
+const recettes = ["Blonde", "Ambrée", "Noire", "Blanche", "IPA", "Triple", "Piment", "Framboise"];
+const formats = [{l:"50cl", p:4}, {l:"75cl", p:6}];
+const background = {
+  Blonde:"background: linear-gradient(0deg,#FFFF00 0%, #FF9900 100%)",
+  Ambrée:"background: linear-gradient(0deg,#F1C232 0%, #FF0000 100%)",
+  IPA:"background: linear-gradient(0deg,#FFFF00 0%, #00FF00 100%)",
+  Blanche:"background: linear-gradient(0deg,#FFF 0%, #4A86E8 100%)",
+  Noire:"background: linear-gradient(0deg,#38761D 0%, #000000 100%)",
+  Triple:"background: linear-gradient(0deg,#D5A6BD 0%, #741B47 100%)",
+  Piment:"background-image: url(Piment.jpg)",
+  Framboise:"background: linear-gradient(0deg,#FFF 0%, #C8233C 100%)"
+}
+let panierData = {};
+let infosData = {};
+const isMobile = window.innerWidth <= 600;
+
+
+const grid = document.getElementById('grid');
+recettes.forEach((nom, bIdx) => {
+  const card = document.createElement('div');
+  card.className = 'beer-card';
+  let rowsHtml = '';
+  formats.forEach((f, fIdx) => {
+    rowsHtml += `
+      <div class="format-row" id="row-${bIdx}-${fIdx}">
+        <div class="format-label">${f.l} <br><span class="format-price">${f.p}€</span></div>
+        <div class="qty-box">
+          <button onclick="changeQty('${nom}','${f.l}',${f.p},-1,${bIdx},${fIdx})">-</button>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" id="qty-${bIdx}-${fIdx}" value="0" readonly>
+          <button onclick="changeQty('${nom}','${f.l}',${f.p},1,${bIdx},${fIdx})">+</button>
+        </div>
+      </div>`;
+  });
+  
+  // Structure avec zone image
+  card.innerHTML = `
+    <div class="beer-image-container" style="${background[nom]}">
+      <img src="bouteilles/${nom.toLocaleLowerCase()}.png" alt="Bouteille de ${nom}" width="120" height="192" loading="lazy">
+    </div>
+    <div class="beer-content">
+      <div class="beer-info"><h3>${nom}</h3></div>
+      ${rowsHtml}
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+let nomTouched = false;
+let telTouched = false;
+document.getElementById("input-nom").addEventListener('blur', (e) => {
+  nomTouched = true;
+});
+document.getElementById("input-tel").addEventListener('blur', (e) => {
+  telTouched = true;
+});
+
+document.getElementById("input-nom").addEventListener('input', (e) => {
+  renderInfos();
+});
+document.getElementById("input-tel").addEventListener('input', (e) => {
+  renderInfos();
+});
+
+document.getElementById("input-jour").addEventListener('input', (e) => {
+  renderInfos()
+});
+document.getElementById("input-heure").addEventListener('input', (e) => {
+  renderInfos()
+});
+document.getElementById("textarea-message").addEventListener('input', (e) => {
+  renderInfos()
+});
+document.getElementById('input-cgv').addEventListener('change', function(event) {
+  renderInfos()
+});
+document.getElementById('input-cgv-desktop').addEventListener('change', function(event) {
+  renderInfos()
+});
+
+function formatTelWithCursor(input){
+  let value = input.value;
+  let selectionStart = input.selectionStart;
+
+  // nombre de chiffres avant le curseur
+  let digitsBeforeCursor = value
+    .slice(0, selectionStart)
+    .replace(/\D/g, "").length;
+
+  // on garde uniquement les chiffres
+  let digits = value.replace(/\D/g, "").slice(0, 10);
+
+  // formatage
+  let formatted = digits.replace(/(\d{2})(?=\d)/g, "$1 ").trim();
+
+  input.value = formatted;
+
+  // recalcul de la position du curseur
+  let newCursor = 0;
+  let digitCount = 0;
+
+  for(let i = 0; i < formatted.length; i++){
+    if(/\d/.test(formatted[i])){
+      digitCount++;
+    }
+    if(digitCount >= digitsBeforeCursor){
+      newCursor = i + 1;
+      break;
+    }
+  }
+
+  // fallback si fin
+  if(digitsBeforeCursor === digits.length){
+    newCursor = formatted.length;
+  }
+
+  input.setSelectionRange(newCursor, newCursor);
+}
+
+// EVENT
+const telInput = document.getElementById("input-tel");
+
+telInput.addEventListener("input", () => {
+  formatTelWithCursor(telInput);
+});
+
+function changeQty(nom, fmtL, prix, delta, bIdx, fIdx) {
+  const key = `${nom}-${fmtL}`;
+  if (!panierData[key]) panierData[key] = { nom, format: fmtL, prix, qty: 0 };
+  
+  panierData[key].qty += delta;
+  const currentQty = panierData[key].qty;
+
+  if (currentQty <= 0) {
+    delete panierData[key];
+    document.getElementById(`row-${bIdx}-${fIdx}`).classList.remove('active-row');
+    document.getElementById(`qty-${bIdx}-${fIdx}`).value = 0;
+  } else {
+    document.getElementById(`row-${bIdx}-${fIdx}`).classList.add('active-row');
+    document.getElementById(`qty-${bIdx}-${fIdx}`).value = currentQty;
+  }
+
+  renderCart();
+}
+
+function selectionHtmlAndTotal(){
+  let total = 0, html = '', nbArticle = 0;
+  const keys = Object.keys(panierData);
+
+  if (keys.length === 0) {
+    return[
+      '<p style="color:#888; text-align:center;">Aucune bière sélectionnée</p>',
+      0,
+      0
+    ];
+  }
+  keys.forEach(k => {
+    const item = panierData[k];
+    total += (item.prix * item.qty);
+    nbArticle += item.qty;
+    html += `<div class="cart-item">
+      <span><strong>${item.nom}</strong> (${item.format}) x${item.qty}</span>
+      <span>${item.prix * item.qty}€</span>
+    </div>`;
+  });
+  return [html, total, nbArticle]
+}
+
+function renderCart() {
+  const [html, total, nbArticle] = selectionHtmlAndTotal()
+
+  document.querySelectorAll('.recap-selection').forEach(el => {
+    el.innerHTML = `
+      <h2>Votre selection</h2>
+      <div id="cart-items">
+        ${html}
+      </div>
+      <div class="cart-total">
+        <span>Total</span><span><span id="total-price">${total}</span>€</span>
+      </div>
+    `;
+  });
+
+  if(total===0) document.getElementById('btn-continuer').disabled= true;
+  else document.getElementById('btn-continuer').disabled= false;
+
+  //mobile
+  if(total===0) document.getElementById('btn-continuer-mobile').disabled= true;
+  else document.getElementById('btn-continuer-mobile').disabled= false;
+
+  document.getElementById("recap-selection-mobile").innerText = 
+      `${nbArticle} bouteille${nbArticle > 1 ? 's' : ''} - ${total}€`;
+
+  renderInfos(true);
+}
+
+function renderInfos(closeInfo){
+
+  const nomInput = document.getElementById("input-nom")
+  const errorNom = document.getElementById("error-nom")
+  const successNom = document.getElementById("success-nom")
+
+  const telInput = document.getElementById("input-tel")
+  const errorTel = document.getElementById("error-tel")
+  const successTel = document.getElementById("success-tel")
+
+  // recuperer et transformer les data
+  infosData.nom = nomInput.value.trim();
+  infosData.tel = telInput.value.replace(/\s/g, "");
+  infosData.jour = document.getElementById("input-jour").value;
+  infosData.heure = document.getElementById("input-heure").value.replace(":", "h");
+  infosData.message = document.getElementById("textarea-message").value;
+  infosData.cgv = document.getElementById(`input-cgv${isMobile ? '' : '-desktop'}`).checked;
+  
+  let validation = 0;
+  // validation des inputs
+  // nom
+  if(infosData.nom.length > 3) { // valid
+    errorNom.textContent = "";
+
+    nomInput.classList.add('valid')
+    nomInput.classList.remove('invalid')
+    errorNom.classList.remove("show")
+    validation++;
+    nomTouched = true
+  }
+  else if(nomTouched){ // invalid & nomTouched
+    errorNom.textContent = "Veuillez entrer votre nom";
+    
+    nomInput.classList.add('invalid')
+    nomInput.classList.remove('valid')
+    errorNom.classList.add("show")
+  } 
+
+  const regex = /^(?:07|06)[1-9]\d{7}$/;
+  // tel
+  if(regex.test(infosData.tel)){ // valid
+    errorTel.textContent = "";
+    telInput.classList.add('valid')
+    telInput.classList.remove('invalid')
+    errorTel.classList.remove("show")
+    successTel.classList.add("show")
+    validation++;
+    telTouched = true;
+  } else if(telTouched){ // invalid
+    errorTel.textContent = "Veuillez entrer un numero de tel portable";
+    
+    telInput.classList.add('invalid')
+    telInput.classList.remove('valid')
+    errorTel.classList.add("show")
+    successTel.classList.remove("show")
+  }
+  
+
+  if(validation===2) {
+    if(infosData.cgv) {
+      document.getElementById("btn-envoyer").disabled = false
+      document.querySelector("#btn-envoyer-mobile button").disabled = false;
+    }
+    else {
+      document.getElementById("btn-envoyer").disabled = true
+      document.querySelector("#btn-envoyer-mobile button").disabled = true;
+    }
+    document.getElementById("btn-continuer2-mobile").disabled = false
+  }
+  else {
+    document.getElementById("btn-envoyer").disabled = true
+    document.getElementById("btn-continuer2-mobile").disabled = true
+  }
+
+  document.querySelectorAll('.recap-infos').forEach(el => el.innerHTML = `
+    <h2 style="margin-bottom: 0px">Vos informations</h2>
+
+    <div class="infos-hidder-wrapper ${closeInfo  ? '' : 'ouvert'}">
+      <div id="infos-hidder">
+        <div id="infos">
+          <h3>Coordonnées</h3>
+          <p>Nom : ${infosData.nom ?? ''}</p>
+          <p>Téléphone : ${infosData.tel ?? ''}</p>
+          <h3>Rendez-vous</h3>
+          <p>À la brasserie : 7 rue de la Font aux Moines, 23300 La Souterraine<br>
+            <a href="https://maps.app.goo.gl/nrc56msXGjKVfcTw8" target="_blank" rel="noopener noreferrer">
+            voir l'itinéraire
+            </a>
+          </p>
+          <p style="text-transform: capitalize">${infosData.jour ?? ''} à ${infosData.heure ?? ''} </p>
+        </div>
+      </div>
+    </div>
+  `)
+}
+
+function continuer(){
+  document.getElementById('slider').classList.add('etape-2');
+
+  document.getElementById("btn-continuer").style.display = "none"
+  document.getElementById("btn-envoyer-container").style.display = "block"
+  
+  document.querySelectorAll(".btn-modifier").forEach(el => el.style.visibility = "visible")
+  document.querySelectorAll(".infos-hidder-wrapper").forEach(el => 
+    el.classList.add('ouvert'))
+  document.getElementById("btn-continuer-mobile").style.display = "none"
+  document.getElementById("btn-continuer2-mobile").style.display = "unset"
+  document.getElementById("recap-selection-mobile").style.display = "none"
+}
+
+function continuer2(){
+  document.getElementById('slider').classList.add('etape-3');
+  document.getElementById("btn-continuer2-mobile").style.display = "none"
+  
+  document.getElementById("btn-envoyer-mobile").style.display = "block"
+  document.getElementById("avant-envoyer-mobile").style.display = "block"
+}
+
+function modifier(){
+  document.getElementById('slider').classList.remove('etape-3');
+  document.getElementById('slider').classList.remove('etape-2');
+
+  document.getElementById("btn-continuer").style.display = "block"
+  document.getElementById("btn-envoyer-container").style.display = "none"
+
+  document.querySelectorAll(".btn-modifier").forEach(el => el.style.visibility = "hidden")
+  
+  document.querySelectorAll(".infos-hidder-wrapper").forEach(el => 
+    el.classList.remove('ouvert')
+  )
+
+
+  document.getElementById("btn-envoyer-mobile").style.display = "none"
+  document.getElementById("avant-envoyer-mobile").style.display = "none"
+
+  document.getElementById("btn-continuer-mobile").style.display = "unset"
+  document.getElementById("btn-continuer2-mobile").style.display = "none"
+  document.getElementById("recap-selection-mobile").style.display = "unset"
+
+}
+
+function modifier2(){
+  document.getElementById('slider').classList.remove('etape-3');
+  document.getElementById("btn-continuer2-mobile").style.display = "unset"
+  
+  document.getElementById("btn-envoyer-mobile").style.display = "none"
+  document.getElementById("avant-envoyer-mobile").style.display = "none"
+}
+
+
+function addOptionsJours(){
+  function addOptionJour(jour){
+    const option = document.createElement("option")
+    option.setAttribute("value", jour)
+    option.innerHTML = jour
+    document.getElementById("input-jour").appendChild(option)
+  }
+
+  function formatDate(d){
+    const jours = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+
+    // On récupère chaque morceau
+    const nomJour = jours[d.getDay()];
+    const jour = String(d.getDate()).padStart(2, '0');
+    const mois = String(d.getMonth() + 1).padStart(2, '0'); // Attention : Janvier = 0 !
+    const annee = d.getFullYear();
+
+    return `${nomJour} ${jour}/${mois}/${annee}`;
+  }
+
+  const aujourdhui = new Date();
+  
+  // On boucle sur les 14 prochains jours (2 semaines)
+  for (let i = 1; i < 18; i++) {
+      let dateCible = new Date();
+      dateCible.setDate(aujourdhui.getDate() + i);
+      
+      const jourSemaine = dateCible.getDay(); // 0=Dim, 1=Lun, 2=Mar, 3=Mer, 4=Jeu, 5=Ven, 6=Sam
+
+      // On vérifie si c'est Lundi (1), Mardi (2), Jeudi (4) ou Vendredi (5)
+      if ([1, 2, 4, 5].includes(jourSemaine)) {
+          addOptionJour(formatDate(dateCible))
+      }
+  }
+      
+
+}
+addOptionsJours();
+renderInfos();
+renderCart();
+
+// MODAL
+const modal = document.getElementById("contact-popup");
+
+// Ouvrir la popup au clic
+document.getElementById("contact-btn").onclick = function() {
+  modal.style.display = "block";
+}
+
+// Fermer la popup au clic sur la croix
+document.querySelector(".close-btn").onclick = function() {
+  modal.style.display = "none";
+}
+
+// Fermer aussi si on clique n'importe où en dehors de la boîte
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+// ----------- ENVOYER
+
+async function envoyer() {
+  let total = 0;
+  let selection = '';
+  Object.keys(panierData).forEach(k => {
+    const item = panierData[k];
+    total += (item.prix * item.qty);
+    selection += `${item.nom} ${item.format} x${item.qty} \n`;
+  });
+  const rdv = `${infosData.jour} à ${infosData.heure}`
+
+  try {
+    document.getElementById("btn-envoyer").disabled = true;
+    document.getElementById("btn-envoyer").innerText = "Envoi...";
+
+    document.querySelector("#btn-envoyer-mobile button").disabled = true;
+    document.querySelector("#btn-envoyer-mobile button").innerText = "Envoi...";
+
+    await emailjs.send("service_4ve9fqg","template_os3e63i",{
+      name: infosData.nom,
+      tel: infosData.tel,
+      rdv: rdv,
+      total: `${total}€`,
+      selection,
+      message: infosData.message,
+    });
+    // await new Promise(r => setTimeout(r, 2000))
+
+    document.getElementById('app-container').style.display = 'none'
+
+    document.getElementById("success-selection").innerText = selection;
+    document.getElementById("success-rdv").innerText = rdv;
+    document.getElementById("success-total").innerText = `${total}€`;
+
+    document.getElementById("success").classList.remove("hidden");
+    document.getElementById("sideMenu").style.display = "none";
+    document.querySelectorAll("nav").forEach(el => el.style.display = "none")
+
+  } catch (error) {
+    alert("Erreur lors de l'envoi");
+    console.error(error);
+  }
+
+
+}
+
+
+// contact
+document.querySelectorAll('.contact-item').forEach(el => {
+  el.addEventListener('click', async () => {
+    let text;
+    if(el.dataset.copy === 'tel'){
+      w = ['57', '82', '81', '07', '18']
+      t = [3, 1, 2, 0, 4]
+      text = t.map(i => w[i]).join(" ");
+    } else if (el.dataset.copy === 'mail'){
+      w = ['ie', 'sser', '&', 'gm', 'co', '*', 'bra', 'sostra', 'ail']
+      t = [6, 1, 0, 7, 2, 3, 8, 5, 4]
+      text = t.map(i => w[i]).join("").replace('&', '@').replace('*', '.') + 'm'
+    } else if(el.dataset.copy === 'adresse'){
+      text = '7 rue de la font aux moines, 23300 La Souterraine'
+    } else return;
+    const label = el.dataset.label;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(`${label} copié`, el);
+    } catch (err) {
+      console.error('Erreur copie', err);
+    }
+  });
+});
+
+function showToast(message, el) {
+  const toast = el.querySelector('.toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+if (isMobile) {
+
+  const navbar = document.querySelector('.navbar-mobile');
+  const sideMenu = document.querySelector('.side-menu');
+  const menuBtn = document.getElementById('menuBtn');
+  const overlay = document.getElementById('overlay');
+  let isOpen = false;
+
+  function updateMenuPosition() {
+    const height = navbar.offsetHeight;
+    sideMenu.style.top = height + 'px';
+  }
+
+  updateMenuPosition();
+  window.addEventListener('resize', updateMenuPosition);
+
+
+  function openMenu() {
+    sideMenu.classList.add('active');
+    overlay.classList.add('active');
+    isOpen = true;
+    menuBtn.textContent = '✕';
+  }
+
+  function closeMenu() {
+    sideMenu.classList.remove('active');
+    overlay.classList.remove('active');
+    isOpen = false;
+    menuBtn.textContent = '☰';
+  }
+
+  document.querySelector(".navbar-mobile img").addEventListener('click', () => isOpen ? closeMenu() : openMenu() );
+
+  menuBtn.addEventListener('click', () => isOpen ? closeMenu() : openMenu() );
+  overlay.addEventListener('click', closeMenu);
+
+}
+
+</script>
+
+<!-- MODALE AGE -->
+<div id="ageModal" style="
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  visibility: hidden;
+">
+  <div style="
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 350px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  ">
+    <h2 style="margin-bottom: 15px;">Bienvenue à la brasserie Sostra</h2>
+    <p style="margin-bottom: 25px;">Nos bières sont réservées aux personnes majeures. Avez-vous plus de 18 ans ?</p>
+    <div style="display: flex; justify-content: space-between; gap: 10px;">
+      <button onclick="rejectAge()" style="
+        flex:1;
+        padding: 10px 15px;
+        border: 1px solid #aaa;
+        background: #eee;
+        color: #333;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: 'Caudex', serif;
+      ">Non, je ne suis pas majeur – quitter</button>
+      <button onclick="acceptAge()" style="
+        flex:1;
+        padding: 10px 15px;
+        border: none;
+        background: #FF9900;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: 'Caudex', serif;
+        font-weight: bold;
+      ">Oui, j’ai plus de 18 ans</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- ACTIONS ---
+function acceptAge() {
+  localStorage.setItem("age_verified", "true");
+  document.getElementById("ageModal").style.display = "none";
+  document.body.style.overflow = "unset"; // autorise scroll
+}
+
+function rejectAge() {
+  window.location.href = "https://www.youtube.com/channel/UCXptamDYEVcU4JCio30hYTw"; // redirection mineur
+}
+
+// --- INIT ---
+window.addEventListener("load", function() {
+  const age = localStorage.getItem("age_verified");
+  if (age !== "true") {
+    const modal = document.getElementById("ageModal");
+    modal.style.visibility = "visible";
+    document.body.style.overflow = "hidden"; // bloque scroll derrière la modale
+  }
+});
+</script>
+
+</body>
+</html>
