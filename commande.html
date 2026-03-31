@@ -1076,9 +1076,11 @@ let nomTouched = false;
 let telTouched = false;
 document.getElementById("input-nom").addEventListener('blur', (e) => {
   nomTouched = true;
+  renderInfos();
 });
 document.getElementById("input-tel").addEventListener('blur', (e) => {
   telTouched = true;
+  renderInfos();
 });
 
 document.getElementById("input-nom").addEventListener('input', (e) => {
