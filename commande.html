@@ -1477,6 +1477,18 @@ function addOptionsJours(){
     document.getElementById("input-jour").appendChild(option)
   }
 
+  function isDateInRange(dateCible, [dateDebut, dateFin]) {
+    const parse = str => {
+      const [d, m, y] = str.split('/').map(Number);
+      return new Date(y, m - 1, d);
+    };
+
+    const debut = parse(dateDebut);
+    const fin   = parse(dateFin);
+
+    return dateCible >= debut && dateCible <= fin;
+  }
+
   function formatDate(d){
     const jours = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
 
@@ -1496,6 +1508,8 @@ function addOptionsJours(){
       let dateCible = new Date();
       dateCible.setDate(aujourdhui.getDate() + i);
       
+      if(isDateInRange(dateCible, ["27/05/2026", "07/06/2026"])) continue;
+
       const jourSemaine = dateCible.getDay(); // 0=Dim, 1=Lun, 2=Mar, 3=Mer, 4=Jeu, 5=Ven, 6=Sam
 
       // On vérifie si c'est Lundi (1), Mardi (2), Jeudi (4) ou Vendredi (5)
