@@ -209,11 +209,28 @@ align-items:center;
     .beer.framboise:hover{
   background: linear-gradient(0deg,#FFF 0%, #C8233C 100%);
   }
+
+  .beer.noel:hover{
+  background: #c20000ff;
+  color: #FFF;
+  }
+
+  .beer.orange:hover{
+  background-image: url(Orange.png);
+  color: #FFF;
+  }
 }
 
 .beer img{
   width:80px;
   height:320px;
+  object-fit:cover;
+  border-radius:4px;
+}
+
+.beer.noel img{
+  width:70px;
+  height:295px;
   object-fit:cover;
   border-radius:4px;
 }
@@ -464,6 +481,17 @@ footer a{
   background: linear-gradient(0deg,#FFF 0%, #C8233C 100%);
   }
 
+  .beer.noel{
+  background: #c20000ff;
+  color: #FFF;
+  }
+
+  .beer.orange{
+  background-image: url(Orange.png);
+  color: #FFF;
+  }
+
+
   section {
     padding: 40px 40px;
     scroll-margin-top: 60px;
@@ -605,6 +633,33 @@ footer a{
       <i>Alcool : 5.6%</i><br>
         Des notes marquées de cacao pur et de céréales grillées se mêlent à une 
         texture soyeuse pour une bière de dégustation, ronde et réconfortante.
+    </div>
+  </div>
+</div>
+
+<div class="beer noel">
+  <h2>Noël</h2>
+  <div class="bouteille">
+    <img src="bouteilles/noel.png">
+    <div>
+      <h3>Douce et chaleureuse.</h3>
+      <i>Alcool : 5.6%</i><br>
+        Les notes chaleureuses des quatre épices se mêlent à la douceur du miel 
+        de châtaigne pour une bière ambrée, douce et chaleureuse.
+    </div>
+  </div>
+</div>
+
+<div class="beer orange">
+  <h2>Orange</h2>
+  <div class="bouteille">
+    <img src="bouteilles/orange.png">
+    <div>
+      <h3>Délicieuse et gourmande</h3>
+      <i>Alcool : 5.3%</i><br>
+        Le zeste d'orange se mêle aux nuances boisées et 
+        résineuses du miel de sapin pour une bière ambrée 
+        délicieuse et gourmande.
     </div>
   </div>
 </div>
